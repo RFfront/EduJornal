@@ -12,7 +12,7 @@ from xlwt.Utils import rowcol_to_cell
 import numpy as np
 import xlrd
 import xlwt
-__version__="1.5.3"
+__version__="1.5.4"
 # import loguru
 # import enum
 
@@ -57,7 +57,7 @@ class Page():
     def __init__(self,discName,people,dates,arr=None):
         self.discName=discName
         self.people=tuple(people)
-        if type(dates[0])==str:
+        if len(dates)>0 and type(dates[0])==str:
             self.dates=[datetime.strptime(i,'%Y%m%d').date() for i in dates]
         else:
             self.dates = dates
@@ -313,7 +313,7 @@ class Journal:
             tmp=Page(
                 ListNames[i],
                 [jorn.groupList.index(rt[0]) for rt in el[1:]],
-                [date(1,1,1)])
+                [])
             for h,datej in enumerate(el[0][1:]):
                 if type(datej)==float:
                     datej=xlrd.xldate_as_datetime(datej,ReadedBook.datemode).date()
